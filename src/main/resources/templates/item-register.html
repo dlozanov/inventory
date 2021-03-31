@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<main class="align-content-center bg-blur my-register-div">
+    <div class="d-flex justify-content-center ">
+        <div class="text-center">
+            <div class="d-flex justify-content-center">
+                <div style="font-size:28px; color: white" class="text-light border-bottom">Регистрация на артикул<br></div>
+            </div>
+            <div class="row">
+                <form
+                        th:action="@{/items/add}"
+                        th:object="${itemRegistrationBindingModel}"
+                        method="POST"
+                        enctype="multipart/form-data">
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputName">Име</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="name"
+                                   th:value="*{name}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   type="text"
+                                   id="inputName"
+                                   class="form-control"
+                                   aria-describedby="nameHelpInline">
+                            <small id="nameError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Името трябва да е с дължина между 3 и 20 символа</small>
+                        </div>
+                    </div>
+                    <!--                 EO: Town-->
+                    <!-- Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputBarcode">Баркод</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="barcode"
+                                   th:value="*{barcode}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   type="text"
+                                   id="inputBarcode"
+                                   class="form-control"
+                                   aria-describedby="barcodeHelpInline">
+                            <small id="barcodeError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Баркода трябва да е с дължина между 3 и 20 символа</small>
+                        </div>
+                    </div>
+                    <!--                 EO: Town-->
+                    <div class="col">
+                        <label for="group">Група</label>
+                        <select th:field="*{group}" th:errorclass="is-invalid" id="group" class="form-select" required>
+                            <option th:each="g : ${stockGroups}" th:value="${g.name}" th:text="${g.name}"></option>
+                        </select>
+                        <small id="groupError" class="invalid-feedback form-text bg-danger rounded">Изберете група</small>
+                    </div>
+                    <div class="col">
+                        <label for="vat">Данъчна група</label>
+                        <select th:field="*{vat}" th:errorclass="is-invalid" id="vat" class="form-select">
+                            <option th:each="v : ${vats}" th:value="${v.letter}" th:text="${v.letter} + '-' + ${v.percent} + '%'"></option>
+                        </select>
+                        <small id="vatError" class="invalid-feedback form-text bg-danger rounded">Изберете група</small>
+                    </div>
+                    <!--                 Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputIncomingPrice">Купешка цена</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="incomingPrice"
+                                   th:value="*{incomingPrice}"
+                                   th:errorclass="is-invalid"
+                                   required
+                                   type="number"
+                                   step="0.01"
+                                   id="inputIncomingPrice"
+                                   class="form-control"
+                                   aria-describedby="incomingPriceHelpInline">
+                            <small id="incomingPriceError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Цената трябва да е положително число</small>
+                        </div>
+                    </div>
+                    <!-- EO: Town -->
+                    <!-- Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputOutgoingPrice">Продажна цена</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="outgoingPrice"
+                                   th:value="*{outgoingPrice}"
+                                   th:errorclass="is-invalid"
+                                   required
+                                   type="number"
+                                   step="0.01"
+                                   id="inputOutgoingPrice"
+                                   class="form-control"
+                                   aria-describedby="outgoingPriceHelpInline">
+                            <small id="outgoingPriceError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Цената трябва да е положително число</small>
+                        </div>
+                    </div>
+                    <!-- EO: Town -->
+                    <div class="col">
+                        <label for="warehouse">Склад</label>
+                        <select th:field="*{warehouse}" th:errorclass="is-invalid" id="warehouse" class="form-select">
+                            <option th:each="w : ${warehouses}" th:value="${w.id}" th:text="${w.town} + '-' + ${w.address}"></option>
+                        </select>
+                        <small id="warehouseError" class="invalid-feedback form-text bg-danger rounded">Изберете склад</small>
+                    </div>
+                    <div class="col">
+                        <label for="supplier">Доставчик</label>
+                        <select th:field="*{supplier}" th:errorclass="is-invalid" id="supplier" class="form-select">
+                            <option th:each="s : ${suppliers}" th:value="${s.id}" th:text="${s.name}"></option>
+                        </select>
+                        <small id="supplierError" class="invalid-feedback form-text bg-danger rounded">Изберете доставчик</small>
+                    </div>
+                    <!-- Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputQuantity">Количество</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="quantity"
+                                   th:value="*{quantity}"
+                                   th:errorclass="is-invalid"
+                                   required
+                                   type="number"
+                                   step="0.001"
+                                   id="inputQuantity"
+                                   class="form-control"
+                                   aria-describedby="quantityHelpInline">
+                            <small id="quantityError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Въведете количество.</small>
+                        </div>
+                    </div>
+                    <!-- EO: Town -->
+                    <!-- Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputDescription">Описание</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="description"
+                                   th:value="*{description}"
+                                   th:errorclass="is-invalid"
+                                   required
+                                   type="text"
+                                   id="inputDescription"
+                                   class="form-control"
+                                   aria-describedby="descriptionHelpInline">
+                            <small id="descriptionError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Въведете описание.</small>
+                        </div>
+                    </div>
+                    <!-- EO: Town -->
+                    <!--Picture -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="imageUpload" class="font-weight-bold">Снимка</label>
+                        </div>
+                        <div>
+                            <input type="file" class="form-control" id="imageUpload" name="pictureUrl">
+                        </div>
+                    </div>
+                    <!-- EO: Picture -->
+
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-primary btn-block w-50" type="submit">Регистриране</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>

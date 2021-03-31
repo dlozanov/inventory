@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <div class="d-flex justify-content-center ">
+        <div class="text-center">
+            <div class="d-flex justify-content-center">
+                <div style="font-size:28px; color: white" class="text-light border-bottom">Редактиране на фирма<br></div>
+            </div>
+            <div class="row g-3">
+                <form
+                        th:action="@{/firms/edit}"
+                        th:object="${firmRegistrationBindingModel}"
+                        method="POST"
+                        enctype="multipart/form-data">
+                    <!-- Name -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputName">Име</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="name"
+                                   th:value="*{name}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   readonly
+                                   type="text"
+                                   id="inputName"
+                                   class="form-control"
+                                   aria-describedby="usernameHelpInline">
+                            <small id="nameError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Name length must be more than 3 characters</small>
+
+                            <small th:if="${firmExistsError}" id="usernameUniqueError"
+                                   class="text-light form-text bg-danger rounded">Името или булстата на фирмата вече са регистрирани</small>
+
+                        </div>
+                    </div>
+                    <!-- EO: Name -->
+
+                    <!-- Bulstat -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputBulstat">Bulstat</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="bulstat"
+                                   th:value="*{bulstat}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="9" maxlength="13"
+                                   readonly
+                                   type="text"
+                                   id="inputBulstat"
+                                   class="form-control"
+                                   aria-describedby="bulstatHelpInline">
+                            <small id="bulstatError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Булстат трябва да е с дължина между 9 и 13</small>
+                        </div>
+                    </div>
+                    <!-- EO: Bulstat -->
+
+                    <!-- Town -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputTown">Град</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="town"
+                                   th:value="*{town}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   type="text"
+                                   id="inputTown"
+                                   class="form-control"
+                                   aria-describedby="townHelpInline">
+                            <small id="townError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Града трябва да е с дължина между 3 и 20 символа</small>
+                        </div>
+                    </div>
+                    <!-- EO: Town -->
+
+                    <!-- Address -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputAddress">Адрес</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="address"
+                                   th:value="*{address}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   type="text"
+                                   id="inputAddress"
+                                   class="form-control"
+                                   aria-describedby="addressHelpInline">
+                            <small id="addressError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Адреса трябва да е с дължина между 3 и 20 символа.</small>
+                        </div>
+                    </div>
+                    <!-- EO: Address -->
+
+                    <!-- Owner name -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputOwnerName">Име на собственик</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="ownerName"
+                                   th:value="*{ownerName}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="3" maxlength="20"
+                                   type="text"
+                                   id="inputOwnerName"
+                                   class="form-control"
+                                   aria-describedby="ownerNameHelpInline">
+                            <small id="ownerNameError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Името на собственика трябва да е с дължина между 3 и 20 символа.</small>
+                        </div>
+                    </div>
+                    <!-- EO: Owner name -->
+
+                    <!--Phone -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputPhone">Телефон</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="phone"
+                                   th:value="*{phone}"
+                                   th:errorclass="is-invalid"
+                                   required minlength="6" maxlength="10"
+                                   type="text"
+                                   id="inputPhone"
+                                   class="form-control"
+                                   aria-describedby="phoneHelpInline">
+                            <small id="phoneError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Телефона трябва да е с дължина между 6 и 10 символа.</small>
+                        </div>
+                    </div>
+                    <!-- EO: Phone -->
+
+                    <!-- Email -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputEmail">Имейл</label>
+                        </div>
+                        <div class="col-auto">
+                            <input name="email"
+                                   th:value="*{email}"
+                                   th:errorclass="is-invalid" required
+                                   type="email"
+                                   id="inputEmail"
+                                   class="form-control"
+                                   aria-describedby="emailHelpInline">
+                            <small id="emailError"
+                                   class="invalid-feedback text-light form-text bg-danger rounded">Must be valid email</small>
+                        </div>
+                    </div>
+                    <!-- EO: Email -->
+
+                    <!--Picture -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="imageUpload" class="font-weight-bold">Снимка</label>
+                        </div>
+                        <div>
+                            <input type="file" class="form-control-file" id="imageUpload" name="img">
+                        </div>
+                    </div>
+                    <!-- EO: Picture -->
+
+                    <div class="d-flex justify-content-center mt-4">
+                        <button class="btn btn-primary btn-block w-50" type="submit">Промяна</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>

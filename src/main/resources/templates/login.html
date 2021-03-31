@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<main class="p-5 align-content-center bg-blur my-register-div">
+    <div class="d-flex justify-content-center">
+        <div class="text-center">
+            <div class="d-flex justify-content-center">
+                <div style="font-size:28px; color: white" class="text-light border-bottom">Вход<br></div>
+            </div>
+            <div class="row g-3 align-items-center">
+                <div th:if="${bad_credentials}" class="alert alert-danger" role="alert">
+                    This username and password combination does not exist.
+                </div>
+                <form
+                    th:action="@{/users/login}"
+                    method="POST">
+                    <!--User name-->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputUsername" class="col-form-label text-light">Име</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text"
+                                   name="username"
+                                   th:value="${username}"
+                                   required minlength="3" maxlength="20"
+                                   id="inputUsername"
+                                   class="form-control"
+                                   aria-describedby="usernameHelpInline">
+                        </div>
+                    </div>
+                    <!--EO: User name-->
+
+                    <!-- Password -->
+                    <div>
+                        <div class="col-auto">
+                            <label for="inputPassword" class="col-form-label text-light">Парола</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="password"
+                                   name="password"
+                                   required minlength="6" maxlength="20"
+                                   id="inputPassword" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-2">
+                        <button class="btn btn-primary btn-block w-50" type="submit">Login</button>
+                    </div>
+                    <!-- EO: Password -->
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>

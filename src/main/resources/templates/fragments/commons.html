@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <title>Inventory App</title>
+  <link rel="stylesheet" href="/css/reset-css.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+
+<body>
+
+<header th:fragment="navigation">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" th:href="@{/}">Inventory App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/home">Начало</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/transactions/sell">Продажба</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/transactions/purchase">Поръчка</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdownVoid" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Връщане
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="/transactions/void-sell">Продажба</a></li>
+              <li><a class="dropdown-item" href="/transactions/void-purchase">Поръчка</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdownReport" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Отчети
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="/reports/inventory">Наличност</a></li>
+              <li><a class="dropdown-item" href="/reports/all">Всички транзакции</a></li>
+              <li><a class="dropdown-item" href="/reports/sells">Продажби</a></li>
+              <li><a class="dropdown-item" href="/reports/purchases">Покупки</a></li>
+              <li><a class="dropdown-item" href="/reports/sells-void">Върнати продажби</a></li>
+              <li><a class="dropdown-item" href="/reports/purchases-void">Върнати покупки</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Фирма
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="/firms/register">Данни за фирма</a></li>
+              <li><a class="dropdown-item" href="/warehouses/get">Складове</a></li>
+              <li><a class="dropdown-item" href="/items/get">Продукти</a></li>
+              <li><a class="dropdown-item" href="/suppliers/get">Доставчици</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="nav-item">
+          <a sec:authorize="!isAuthenticated()" class="nav-link" th:href="@{/users/login}">Вход</a>
+        </form>
+        <form class="nav-item">
+          <a sec:authorize="!isAuthenticated()" class="nav-link" th:href="@{/users/register}">Регистрация</a>
+        </form>
+        <form class="nav-item">
+          <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/users/profile}">Профил</a>
+        </form>
+        <form class="nav-item" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="POST">
+          <button type="submit" class="btn btn-link">
+            Изход
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<footer th:fragment="footer" class="footer bg-blur">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+  <div class="container-fluid text-center">
+    <div class="h5 text-white">
+      &copy;Inventory App
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>

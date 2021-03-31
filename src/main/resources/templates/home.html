@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/commons :: head"></head>
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<main class="p-5 align-content-center bg-blur">
+    <div class="row">
+        <div class="col-2">
+            <h1 class="text-light border-left pl-2">Добре дошли в</h1>
+            <h1 class="text-light border-left pl-2">Inventory App!</h1>
+        </div>
+        <div class="col-8">
+            <div class="d-flex justify-content-center">
+                <div class="my-index-div w-100">
+                    <div class="row mt-5" id="firmsList">
+                        <th:block th:each="f : ${registeredFirms}" th:object="${f}">
+                            <!-- Start single album -->
+                            <div class="col-md-3">
+                                <div class="card mb-4 box-shadow">
+                                    <img th:src="*{logoUrl}"
+                                         class="card-img-top" alt="Thumbnail [100%x225]"
+                                         data-holder-rendered="true"
+                                         style="height: 150px; width: 100%; display: block;">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <p class="card-text border-bottom " th:text="*{name}"></p>
+                                            <p class="card-text border-bottom " th:text="*{bulstat}"></p>
+                                            <p class="card-text border-bottom " th:text="*{town}"></p>
+                                            <p class="card-text border-bottom " th:text="*{address}"></p>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div sec:authorize="!hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')" class="btn-group">
+                                                <form th:action="@{/firms/apply/{name}(name = *{name})}" method="POST">
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Кандидатстване</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a th:href="@{/firms/show/{name}(name=*{name})}">Детайли</a>
+                                </div>
+                            </div>
+                            <!-- EO: Start single album -->
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <table sec:authorize="hasRole('ROLE_ADMIN')" style="height: 50%; width: 100%; alignment: right" class="table" bgcolor="white">
+                <thead>
+                <tr>
+                    <th>Служители</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${aplliedUsers}" th:object="${u}">
+                    <td th:text="*{fullname}"></td>
+                    <td>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn-link" th:href="@{/users/edit/{name}(name=*{username})}">
+                            Редакция
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')" style="height: 50%; width: 100%; alignment: right" class="table" bgcolor="white">
+                <thead>
+                <tr>
+                    <th>Необработени поръчки</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${pendingPurchases}" th:object="${p}">
+                    <td th:text="*{item.name}"></td>
+                    <td th:text="*{quantity}"></td>
+                    <td th:text="*{sum}"></td>
+                    <td>
+                        <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')" class="btn-link" th:href="@{/transactions/confirm/{id}(id=*{id})}">
+                            Виж
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>

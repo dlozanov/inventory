@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/commons :: head"></head>
+<body>
+
+<header th:replace="fragments/commons :: navigation"></header>
+
+<!-- TODO: fix css-->
+
+<main class="p-5 align-content-center bg-blur">
+
+  <p class="text-light">
+    Възникна грешка: <br/>
+  </p>
+  <p th:text="${exceptionText}" class="text-light"><br/>
+  </p>
+
+</main>
+<footer th:replace="fragments/commons :: footer"></footer>
+</body>
+</html>
