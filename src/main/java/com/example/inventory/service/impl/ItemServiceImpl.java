@@ -91,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public boolean hasEnoughQuantity(long id, double quantity) {
         ItemEntity itemEntity = itemRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Артикула не може да бъде открит."));
+                .orElseThrow(() -> new ItemNotFoundException("Артикула не може да бъде открит."));
         return itemEntity.getQuantity() >= quantity;
     }
 }

@@ -1,13 +1,10 @@
 package com.example.inventory.web;
 
 import com.example.inventory.model.entity.enums.UserRole;
-import com.example.inventory.model.view.ItemRestViewModel;
+import com.example.inventory.model.service.TransactionServiceModel;
 import com.example.inventory.model.view.ItemViewModel;
 import com.example.inventory.model.view.TransactionViewModel;
-import com.example.inventory.service.FirmService;
-import com.example.inventory.service.ItemService;
-import com.example.inventory.service.TransactionService;
-import com.example.inventory.service.UserRoleService;
+import com.example.inventory.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +22,15 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final UserRoleService userRoleService;
     private final FirmService firmService;
+    private final EmailService emailService;
     private final ModelMapper modelMapper;
 
-    public TransactionController(ItemService itemService, TransactionService transactionService, UserRoleService userRoleService, FirmService firmService, ModelMapper modelMapper) {
+    public TransactionController(ItemService itemService, TransactionService transactionService, UserRoleService userRoleService, FirmService firmService, EmailService emailService, ModelMapper modelMapper) {
         this.itemService = itemService;
         this.transactionService = transactionService;
         this.userRoleService = userRoleService;
         this.firmService = firmService;
+        this.emailService = emailService;
         this.modelMapper = modelMapper;
     }
 
@@ -104,6 +103,9 @@ public class TransactionController {
 
         transactionService.confirmPendingTransaction(id, principal.getName());
 
+        TransactionServiceModel byId = transactionService.findById(id);
+        emailService.sendMessage(byId.getBuyer().getEmail(), "Purchase", "Поръчката ви е обработена и потвърдена.");
+
         return "redirect:/home";
     }
 
@@ -113,6 +115,9 @@ public class TransactionController {
         userRoleService.getAccess(principal.getName(), List.of(UserRole.ADMIN, UserRole.MODERATOR));
 
         transactionService.declinePendingTransaction(id, principal.getName());
+
+        TransactionServiceModel byId = transactionService.findById(id);
+        emailService.sendMessage(byId.getBuyer().getEmail(), "Purchase", "Поръчката ви е отказана.");
 
         return "redirect:/home";
     }
