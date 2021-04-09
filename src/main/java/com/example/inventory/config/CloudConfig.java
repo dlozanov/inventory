@@ -13,7 +13,6 @@ public class CloudConfig {
 
     private String cloudName = "dlozanov";
     private String apiKey = "151865915518574";
-//    private String apiSecret = "1DU1WIAVpkIY72vwZuvqkNGMYXE";
     private String apiSecret = System.getenv("CLOUDINARY_SECRET");
 
     @Bean

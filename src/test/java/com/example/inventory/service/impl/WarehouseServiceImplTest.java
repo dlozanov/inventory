@@ -44,7 +44,7 @@ public class WarehouseServiceImplTest {
         firm1.setTown("Sofia");
         firm1.setAddress("Drujba 2");
         firm1.setOwnerName("Denis");
-        firm1.setPhone("0883511440");
+        firm1.setPhone("123123123");
         firm1.setEmail("firm1@gmail.com");
         warehouse1.setFirm(firm1);
 

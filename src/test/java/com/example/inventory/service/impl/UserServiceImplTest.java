@@ -49,7 +49,7 @@ public class UserServiceImplTest {
         userEntity.setPassword("123123");
         userEntity.setFullname("Denis");
         userEntity.setEmail("denis@abv.bg");
-        userEntity.setPhone("0883511440");
+        userEntity.setPhone("123123123");
         userEntity.setRoles(List.of(userRoleEntity1, userRoleEntity2));
 
         serviceToTest = new UserServiceImpl(mockUserRepository, new ModelMapper(), null, null, null);
