@@ -16,7 +16,7 @@ public class EmailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername("inventoryapp12345@gmail.com");
-        mailSender.setPassword("AppInventory12345");
+        mailSender.setPassword(System.getenv("EMAIL_PASS"));
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
